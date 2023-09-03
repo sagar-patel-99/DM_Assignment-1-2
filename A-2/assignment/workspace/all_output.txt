@@ -1,0 +1,86 @@
+Based on the requirements and assumptions, we will need the following classes and functions:
+
+1. A `Calculator` class that will perform the basic arithmetic operations. This class will have the following methods:
+   - `add`: to perform addition
+   - `subtract`: to perform subtraction
+   - `multiply`: to perform multiplication
+   - `divide`: to perform division
+
+2. A `main` function that will serve as the entry point of the program. This function will create an instance of the `Calculator` class and interact with the user to perform calculations.
+
+3. A `test_calculator` function in a separate test file that will perform unit tests on the `Calculator` class.
+
+Now, let's write the code for each of these components.
+
+calculator.py
+```python
+class Calculator:
+    def add(self, a, b):
+        return a + b
+
+    def subtract(self, a, b):
+        return a - b
+
+    def multiply(self, a, b):
+        return a * b
+
+    def divide(self, a, b):
+        if b == 0:
+            raise ValueError("Cannot divide by zero")
+        return a / b
+```
+
+main.py
+```python
+from calculator import Calculator
+
+def main():
+    calculator = Calculator()
+    while True:
+        print("\n1. Add")
+        print("2. Subtract")
+        print("3. Multiply")
+        print("4. Divide")
+        print("5. Exit")
+        choice = int(input("Enter your choice: "))
+        if choice == 5:
+            break
+        a = int(input("Enter first number: "))
+        b = int(input("Enter second number: "))
+        if choice == 1:
+            print("Result: ", calculator.add(a, b))
+        elif choice == 2:
+            print("Result: ", calculator.subtract(a, b))
+        elif choice == 3:
+            print("Result: ", calculator.multiply(a, b))
+        elif choice == 4:
+            try:
+                print("Result: ", calculator.divide(a, b))
+            except ValueError as e:
+                print(e)
+
+if __name__ == "__main__":
+    main()
+```
+
+test_calculator.py
+```python
+import pytest
+from calculator import Calculator
+
+def test_calculator():
+    calculator = Calculator()
+    assert calculator.add(1, 2) == 3
+    assert calculator.subtract(2, 1) == 1
+    assert calculator.multiply(2, 3) == 6
+    assert calculator.divide(6, 2) == 3
+    with pytest.raises(ValueError):
+        calculator.divide(1, 0)
+```
+
+requirements.txt
+```
+pytest==6.2.4
+```
+
+To run the program, execute `python main.py`. To run the tests, execute `pytest test_calculator.py`.
